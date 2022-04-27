@@ -42,6 +42,8 @@ namespace sysiphos {
     /**
      * Die Basisklasse fuer Fahrzeuge. Jedes Fahrzeug ist von einem Typ, 
      * welcher einfach in der abgeleiteten Klasse neu eingetragen wird.
+     *
+     * Abgeleitet Klassen muessen die 'Move()' Methode implementieren.
      */
     class Vehicle {
 
@@ -53,9 +55,8 @@ namespace sysiphos {
             Vehicle(Manufacturer* m)
                 : manu(m) { }
 
-            void Move() {
-                std::cout << "You are driving a " << this->type << " from " << manu->get_name() << "." << std::endl;
-            }
+            virtual void Move() =0;
+
     };
 
     /**
@@ -64,17 +65,32 @@ namespace sysiphos {
     class Tyre {
         public:
             double Pressure_bar = 2.5;
+
+            virtual void stringify() =0;
     };
 
     class SummerTyre : public Tyre {
         public:
             double MaximumTemperature_degC = 50.;
+
+            void stringify() {
+                std::cout << "summer tyres, pressure: " << Pressure_bar
+                    << ", max. Temp: " << MaximumTemperature_degC
+                    << std::endl;
+            }
     };
 
     class WinterTyre : public Tyre {
         public:
             double MinimumTemperature_degC = -45.;
             double Thickness_mm = 7.;
+
+            void stringify() {
+                std::cout << "winter tyres, pressure: " << Pressure_bar
+                    << ", min. Temp: " << MinimumTemperature_degC
+                    << ", thickness: " << Thickness_mm
+                    << std::endl;
+            }
     };
 
 
@@ -98,6 +114,13 @@ namespace sysiphos {
             {
                 this->tyre = t;
             }
+
+            void Move()
+            {
+                std::cout << "You are driving a " << this->type << " from " << manu->get_name() << "." << std::endl;
+                std::cout << "This car is having: " << std::endl;
+                this->tyre->stringify(); 
+            }
     };
 
     class Motorcycle : public Vehicle {
@@ -105,6 +128,11 @@ namespace sysiphos {
         public:
             Motorcycle(Manufacturer* manu)
                 : Vehicle(manu) { this->type = "motorcycle"; }
+
+            void Move()
+            {
+                std::cout << "You are driving a " << this->type << " from " << manu->get_name() << "." << std::endl;
+            }
     };
 
 } // namespace
