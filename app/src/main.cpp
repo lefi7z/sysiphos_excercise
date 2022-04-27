@@ -4,7 +4,7 @@ using namespace sysiphos;
 
 int main()
 {
-    Car toyota;
+    Car toyota(new KTM());
 
     toyota.Move();
 
