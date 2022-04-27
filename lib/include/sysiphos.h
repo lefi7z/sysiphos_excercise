@@ -58,13 +58,46 @@ namespace sysiphos {
             }
     };
 
+    /**
+     * Die Klasse 'Car' soll noch Reifen mit speziellen Eigenschaften bekommen.
+     */
+    class Tyre {
+        public:
+            double Pressure_bar = 2.5;
+    };
+
+    class SummerTyre : public Tyre {
+        public:
+            double MaximumTemperature_degC = 50.;
+    };
+
+    class WinterTyre : public Tyre {
+        public:
+            double MinimumTemperature_degC = -45.;
+            double Thickness_mm = 7.;
+    };
+
+
     /* ------ die Fahrzeugtypen --------- */
 
     class Car : public Vehicle {
 
+            Tyre* tyre;
+
         public:
+            Car(Manufacturer* manu, Tyre* t)
+                : Vehicle(manu), tyre(t) { this->type = "car"; }
+
+            /**
+             * Die "default-factory" stattet neue Autos mit Sommerreifen aus:
+             */
             Car(Manufacturer* manu)
-                : Vehicle(manu) { this->type = "car"; }
+                : Car(manu, new SummerTyre) { }
+
+            void switch_tyres(Tyre* t)
+            {
+                this->tyre = t;
+            }
     };
 
     class Motorcycle : public Vehicle {
