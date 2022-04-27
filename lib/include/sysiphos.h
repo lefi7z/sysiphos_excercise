@@ -21,10 +21,22 @@ namespace sysiphos {
 
     /* ------ die Hersteller -------- */
 
+    class Honda : public Manufacturer {
+
+        public:
+            std::string get_name() { return "Honda"; }
+    };
+
     class KTM : public Manufacturer {
 
         public:
             std::string get_name() { return "KTM"; }
+    };
+
+    class Toyota : public Manufacturer {
+
+        public:
+            std::string get_name() { return "Toyota"; }
     };
 
     /**
@@ -42,7 +54,7 @@ namespace sysiphos {
                 : manu(m) { }
 
             void Move() {
-                std::cout << "You are driving a " << this->type << " from " << manu->get_name() << std::endl;
+                std::cout << "You are driving a " << this->type << " from " << manu->get_name() << "." << std::endl;
             }
     };
 

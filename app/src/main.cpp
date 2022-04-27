@@ -8,5 +8,9 @@ int main()
 
     toyota.Move();
 
+    Motorcycle honda(new Honda());
+
+    honda.Move();
+
     return 0;
 }
